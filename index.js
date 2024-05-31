@@ -8,6 +8,9 @@ app.get("/about", (req, res) => {
     res.send("This is about page");
 });
 
+app.get("/data", (req, res) => {
+    res.send("This data page");
+});
 app.listen(3000, () => {
   
    

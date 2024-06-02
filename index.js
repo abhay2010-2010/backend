@@ -1,13 +1,28 @@
 const express = require("express");
 const { connection } = require("./config");
+const User = require("./user");
 const app = express();
+app.use(express.json())
+app.get("/", async (req, res) => {
+    try {
+        const user = await User.find();
+        res.status(200).send(user)
+    } catch (error) {
+        res.status(404).send(error);
+    }
 
-app.get("/", (req, res) => {
-    res.send("Hello World");
 });
-app.get("/about", (req, res) => {
-    res.send("This is about page");
+app.post("/add", async (req, res) => {
+    try {
+        const user = new User(req.body);
+        await user.save();
+        res.status(200).send({ msg: "user created succesfully", user: user })
+    } catch (error) {
+        res.status(200).send(error);
+    }
+
 });
+
 
 app.get("/data", (req, res) => {
     res.send("This data page");
